@@ -8,6 +8,8 @@ int main()
 	int a[10]={0,};
 	int min= (BIG_NUMBER) -1;
 	int min2 = (BIG_NUMBER) -1;
+
+	//input
 	for(int i =0; i <10; i++)
 		scanf("%d",&a[i]);
 	
@@ -18,6 +20,7 @@ int main()
 			min = a[i];
 	}
 	
+	//check
 	for(int i =0; i <10; i++)
 	{
 		if(min2>=a[i])

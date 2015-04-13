@@ -1,54 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 100
+#define E 0
+#define W 1
+#define S 2
+#define N 3
 
 int main()
 {
-	int is_cancle;
-	int array[MAX]={0,};
-	int len = 0;
+	int d;
+	int x,y;
+	printf("d >> ");
+	scanf("%d",&d);
 	
-	//input
-	for(len =0; len<MAX; len++)
+	printf("input x,y >> ");
+	scanf("%d,%d",&x,&y);
+	
+	switch(d)
 	{
-		printf("%d >> ",len+1);
-		is_cancle = scanf("%d",&array[len]);
-
-		if(is_cancle == EOF)
+		case E:
+			x++;
+			break;
+		case W:
+			x--;
+			break;
+		case S:
+			y--;
+			break;
+		case N:
+			y++;
+			break;
+		default:
+			printf("Error occur\n");
+			exit(0);
 			break;
 	}
-	
-	//sort
-	for(int i=0; i <len; i++)
-	{
-		for(int j=i; j<len ; j++)
-		{
-			if(array[i]>array[j])
-			{
-				//swap
-				int temp = array[i];
-				array[i] = array[j];
-				array[j] = temp;
-			}
-		}
-	}
-
-	//delete number	
-	int temp;
-	printf(" INPUT >> ");
-	scanf("%d",&temp);
-
-	//search and delete
-	for(int i =0; i <len-1 ; i++)
-	{
-		if(temp == array[i])
-		{
-			for(int j=i ; j<len;j++)
-				array[j] = array[j+1];
-		}
-		printf("%d ",array[i]);
-	}
-	printf("\n");
-	
+	printf("(%d,%d)\n",x,y);
 }

@@ -1,28 +1,33 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+
+#define MAX 100
+
 int main()
 {
-	int N ;
-	printf("N >> ");
-	scanf("%d",&N);
-	int *arr =(int*)malloc(sizeof(int)*N);
-	memset(arr,-1,sizeof(int)*N);
-	
-	for(int i =0; i<N; i++)
+        int is_cancle;
+        int array[MAX]={0,};
+        int len = 0;
+	int cnt = 0;
+
+        //input
+        for(len =0; len<MAX; len++)
+        {
+                printf("%d >> ",len+1);
+                is_cancle = scanf("%d",&array[len]);
+
+                if(is_cancle == EOF)
+                        break;
+        }	
+
+	//routine
+	for(int i=1; i<len-1; i++)
 	{
-		int temp;
-		printf("%d >>",i+1);
-		scanf("%d",&temp);
-		for(int j = 0; j<N; j++)
-		{
-			if(arr[j] == temp)
-			{
-				printf("YES\n");
-				exit(0);
-			}
-		}
-		arr[i] = temp;	
+		if(array[i-1] <= array[i] && array[i] >=array[i+1])
+			cnt++;
 	}
-	printf("NO\n");
+
+	printf("%d\n",cnt);
+
 }

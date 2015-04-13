@@ -8,6 +8,8 @@ int main()
 	int EWSN[4] = {1,-1,-1,1};
 	int d;
 	int dist;
+
+	//input
 	printf("input 0-3 : ");
 	scanf("%d",&d);
 
@@ -18,12 +20,15 @@ int main()
 	printf("y : ");
 	y = (int*)malloc(sizeof(int));
 	scanf("%d",y);
-	
+
+	//distance in memory	
 	dist = y-x;
 
+	//write on memory
 	x = (int*)(x+dist*(d/2));
 	*x += EWSN[d];
 	x = (int*)(x-dist*(d/2));
 	
+	//print
 	printf("(%d,%d)\n",*x,*y);
 }

@@ -1,36 +1,58 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
-void solve(int *arr, int N)
-{
-	int wall = -1;
-	int cnt = 1;
-
-	for(int i =0; i <N; i++)
-	{
-		if(arr[i]>=wall)
-			wall= arr[i];
-		else
-			cnt++;
-	}
-	printf("%d", cnt);
-}
+#define MAX 100
 
 int main()
 {
-	int N;
-	printf("N >> ");
-	scanf("%d",&N);
-
-	int *arr = (int*)malloc(sizeof(int)*N);
-	memset(arr,0,sizeof(int)*N);
-
-	for(int i =0; i<N ; i++)
+	int is_cancle;
+	int array[MAX]={0,};
+	int len = 0;
+	
+	//input
+	for(len =0; len<MAX; len++)
 	{
-		printf("%d >> ",i+1);
-		scanf("%d",&arr[i]);
+		printf("%d >> ",len+1);
+		is_cancle = scanf("%d",&array[len]);
+
+		if(is_cancle == EOF)
+			break;
+	}
+	
+	//sort
+	for(int i=0; i <len; i++)
+	{
+		for(int j=i; j<len ; j++)
+		{
+			if(array[i]>array[j])
+			{
+				//swap
+				int temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+		}
 	}
 
-	solve(arr,N);
+	//delete number	
+	int temp;
+	printf(" INPUT >> ");
+	scanf("%d",&temp);
+
+	//search and delete
+	for(int i =0; i <len-1 ; i++)
+	{
+		if(temp == array[i])
+		{
+			for(int j=i ; j<len;j++)
+				array[j] = array[j+1];
+			break;
+		}
+	}
+
+	//print
+	for(int i=0; i<len-1; i++)
+		printf("%d ",array[i]);
+	printf("\n");
+	
 }

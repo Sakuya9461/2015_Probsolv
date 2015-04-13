@@ -1,67 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
+#define MAX 10000
 #define bool char
+#define START 0
+#define END 1
 
-int* inverse(int *arr,int N)
+void solve(int *array,int len)
 {
-	int *ret = (int*)malloc(sizeof(int)*N);
-
-	for(int i =0; i<N; i++)
+	int history[2] ={0,};
+	int max = 0;
+	int cnt =1;
+	bool isflat = 0;
+	for(int i=0; i <len-1; i ++)
 	{
-		int idx =0;
-		while(1)
+		//is same~
+		if(array[i] == array[i+1])
 		{
-			if(arr[idx++] == i)
+			cnt++;
+
+			//if isflat is false, it is not continuous in this time.
+			if(!isflat)
 			{
-				ret[i] =idx-1;
-				break; 
+				//set flat and save index
+				isflat = 1;
+				history[START] = i;
 			}
+			history[END] = i+1;
 		}
-		printf("%d ",ret[i]);
-	}
-printf("\n");
-	return ret;
-}
-
-int* perm(int N)
-{
-	int *ret = (int*)malloc(N*sizeof(int));
-	int *inv = (int*)malloc(N*sizeof(int));
-	bool *isdup = (bool*)malloc(N);
-	memset(isdup,0,N);
-	int idx = 0;
-	srand(time(NULL));
-	//do not duplicate any number.
-	while(idx<N)
-	{
-		int ran = rand()%N;
-	
-		if(!isdup[ran])
+		else
 		{
-			isdup[ran] = 1;
-			ret[idx++] = ran;
+			isflat = 0;
+			cnt = 1;
 		}
+		
+		if(max<cnt)
+			max = cnt;
 	}
-
-	for(int i =0; i<N; i++)
-		printf("%d ",ret[i]);
-	printf("\n");
-	return ret;
+	printf("%d(%d,%d)\n",max,history[START],history[END]);
 }
 
 
-int main()
+int main(int argc, char** argv)
 {
+	int array[MAX]={0,};
 	int N;
-	printf("N >> ");
-	scanf("%d",&N);
-	int* arr = perm(N);
-	
-	int* inv = inverse(arr,N);
 
-	free(arr);
-	free(inv);
-}
+	printf("N > ");
+	scanf("%d",&N);
+	
+	for(int i =0; i<N ;i++)
+		scanf("%d",&array[i]);
+
+	//routine
+	solve(array,N);
+	
+}	

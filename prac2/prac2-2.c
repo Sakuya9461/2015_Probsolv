@@ -1,39 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-#define E 0
-#define W 1
-#define S 2
-#define N 3
+#define MAX 10.0
 
 int main()
 {
-	int d;
-	int x,y;
-	printf("d >> ");
-	scanf("%d",&d);
+	float aver;
+	float SD;
+	float sum = 0;
+	int arr[10];
 	
-	printf("input x,y >> ");
-	scanf("%d,%d",&x,&y);
-	
-	switch(d)
+	//input
+	for(int i = 0 ; i <MAX ; i++)
 	{
-		case E:
-			x++;
-			break;
-		case W:
-			x--;
-			break;
-		case S:
-			y--;
-			break;
-		case N:
-			y++;
-			break;
-		default:
-			printf("Error occur\n");
-			exit(0);
-			break;
+		scanf("%d",&arr[i]);
+		aver += arr[i];
 	}
-	printf("(%d,%d)\n",x,y);
+
+	//calc aver
+	aver /= MAX;
+
+	//for calc SD
+	for(int i =0; i <MAX; i++)
+	{
+		int tmp = aver-arr[i];
+		sum += tmp*tmp;
+	}
+	SD = sqrt(sum)/MAX;
+
+	printf("AVER: %f, SD : %f\n",aver,SD);
 }
