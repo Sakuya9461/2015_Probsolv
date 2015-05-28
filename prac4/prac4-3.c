@@ -10,15 +10,21 @@
 
 #define PATH "dict"
 #define bool char
+
+
 char* word[MAXWORDS];
 int nwords;
 int index_chosen_word;
 
+
+//set random seed by TIMESTAMP 
 void initialize_number_generator()
 {
 	srand(time(NULL));
 }
 
+
+//Read dict. file and save data in array.
 void read_dictionary()
 {
 	FILE* f = fopen(PATH,"r");	
@@ -30,14 +36,20 @@ void read_dictionary()
 	}
 	nwords = i;
 }
+
+//random word selection
 void choose_word()
 {
 	index_chosen_word = rand()%nwords;
 }
+
 void play_game()
 {
 	//in linux
 	system("clear");
+
+	//in window
+	//system("cls");
 
 	char* answer = word[index_chosen_word];
 	char* hangword;
@@ -46,15 +58,17 @@ void play_game()
 	hangword = (char*)malloc(len*sizeof(char));
 	strncpy(hangword,answer,len-1);
 
-	//do not zero.
+	//do not setting zero in Number Of blind
 	int loopcnt;
 	while(!(loopcnt = rand()%len))
 	{}
 
 	int NumberOfBlind = loopcnt;
+
 	//loop to blind char.
 	while(loopcnt)
 	{
+		//random index is setting blind
 		int idx = rand()%len;
 		if(hangword[idx] != '_')
 		{
@@ -63,10 +77,14 @@ void play_game()
 		}
 	}
 
-	
+
 	int Try =0;
 	int TimeToDeath = 10+1;
+
+	//for check input duplication
 	char duptable[10+1]={0,};
+
+	//It just pictures. 
 	char* hangman[10+1]={"\n\n\n\n\n\n\n\n\n\n\n\n",
 			     "\n\n\n\n\n\n\n\n\n\n\n\n----------------",
 			   "\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n--------+-------",
@@ -83,26 +101,34 @@ void play_game()
 	int dupidx = 0;
 	while(TimeToDeath != Try)
 	{
+		//linux
 		system("clear");
+
+		//windwos
+		//system("cls");
+
 		char letter;
 		bool iscorrect = 0;
 
+		//print picture and word
 		printf("%s\n\n",hangman[Try]);
 		for(int i =0; i < len ; i++)
 			printf("%c  ",hangword[i]);
 
-		printf("\n\nYOU GUESSED LETTER :");
 
+		//print gussed letters
+		printf("\n\nYOU GUESSED LETTER :");
 		for(int i = 0; i<strlen(duptable); i++)
 		{
 			printf(" %c ",duptable[i]);
 		}
-
 		printf("\n\n");
 
+		//get input
 		printf("Pick a letter >> ");
 		scanf(" %c",&letter);
 
+		//check duplicate
 		if(strchr(duptable,letter))
 		{
 			printf("Sorry, already guessed. ' %c '\n",letter);
@@ -110,8 +136,11 @@ void play_game()
 			continue;
 		}
 
+		//add letter to duplicate table
 		duptable[dupidx++] = letter;
 
+
+		//check to answer
 		for(int i = 0; i<len; i ++)
 		{
 			if(hangword[i] == '_' && answer[i] == letter)
@@ -121,12 +150,15 @@ void play_game()
 				NumberOfBlind -= 1;
 			}	
 		}
+
+		//All letters are correct
 		if(!NumberOfBlind)
 		{
 			printf("YOU ALIVE!!\n");
 			break;
 		}
 
+		//if letter is miss to answer, try + 1
 		if(!iscorrect)
 			Try++;
 	}
