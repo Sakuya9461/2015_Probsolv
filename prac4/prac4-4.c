@@ -3,7 +3,8 @@
 #include <string.h>
 
 #define MAXLEN 40
-#define PATH "text.txt"
+#define INPUT "text.txt"
+#define OUTPUT "./words.txt"
 #define MAXCOUNT 4000 
 #define bool char
 
@@ -12,7 +13,7 @@ char* word[MAXCOUNT];
 
 void read_dictionary()
 {
-        FILE* f = fopen(PATH,"r");
+        FILE* f = fopen(INPUT,"r");
         int i =0;
 	char temp[MAXLEN+1];
         while(!feof(f))
@@ -40,6 +41,7 @@ void read_dictionary()
 		}
 	}
         nwords = i;
+	fclose(f);
 }
 
 void swap(char** arg1, char** arg2)
@@ -61,6 +63,19 @@ void sorting()
 	}
 }
 
+void write_file()
+{
+	FILE *f = fopen(OUTPUT,"w");
+	
+	for(int i=0; i <nwords; i++)
+	{
+		fwrite(word[i],1,strlen(word[i]),f);
+	
+		//insert new line
+		fwrite("\r\n",1,2,f);
+	}
+	fclose(f);
+}
 void print_result()
 {
 	for(int i =0; i <nwords; i++)
@@ -72,4 +87,5 @@ int main()
 	read_dictionary();
 	sorting();
 	print_result();
+	write_file();
 }
