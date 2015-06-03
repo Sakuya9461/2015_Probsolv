@@ -40,7 +40,7 @@ void insert(char * word)
 		table[index+1] = &temp;
 		capacity[index] += MALLOC_STEP;
 	}
-	table[index][size[index]] = (char*)malloc(sizeof(char*)*WORD_MAX);
+	table[index][size[index]] = (char*)malloc(sizeof(char*)*(strlen(word)+1));
 	strncpy(table[index][size[index]],word,strlen(word));
 	size[index]++;
 }
